@@ -21,6 +21,7 @@ docker run -d --name matrix_webhook      \
     -e USER="x"                          \
     -e PASSWORD="x"                      \
     -e TOKEN="x"                         \
+    -e LISTEN='0.0.0.0'                  \
     -p 8080:3000                         \
     --restart unless-stopped chikage/matrix_webhook:latest
 ```
