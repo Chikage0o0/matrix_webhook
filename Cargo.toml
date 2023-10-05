@@ -21,3 +21,11 @@ env_logger = "0.10.0"
 log = "0.4.20"
 
 tower-http = { version = "0.4.4", features = ["auth"] }
+
+
+[profile.release]
+lto = true
+opt-level = "z"
+panic = "abort"
+codegen-units = 1
+strip = true
