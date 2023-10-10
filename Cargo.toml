@@ -1,31 +1,30 @@
 [package]
+authors = ["Chikage <chikage@939.me>"]
+edition = "2021"
 name = "matrix_webhook"
 version = "0.1.0"
-edition = "2021"
-authors = ["Chikage <chikage@939.me>"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
 anyhow = "1.0.75"
-matrix-sdk = { version = "0.6.2", features = ["markdown"] }
 axum = "0.6.20"
-tokio = { version = "1.12.0", features = ["full"] }
+clap = {version = "4.4.6", features = ["env", "derive"]}
+matrix-sdk = {version = "0.6.2", features = ["markdown"]}
+tokio = {version = "1.12.0", features = ["full"]}
 url = "2.4.1"
-clap = { version = "4.4.6", features = ["env", "derive"] }
-
-serde = { version = "1.0.130", features = ["derive"] }
-
 
 env_logger = "0.10.0"
 log = "0.4.20"
+serde = {version = "1.0.130", features = ["derive"]}
+serde_json = "1.0.68"
+uuid = {version = "1.4.1", features = ["v4"]}
 
-tower-http = { version = "0.4.4", features = ["auth"] }
-
+tower-http = {version = "0.4.4", features = ["auth"]}
 
 [profile.release]
+codegen-units = 1
 lto = true
 opt-level = "z"
 panic = "abort"
-codegen-units = 1
 strip = true

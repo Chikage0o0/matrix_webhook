@@ -1533,9 +1533,11 @@ dependencies = [
  "log",
  "matrix-sdk",
  "serde",
+ "serde_json",
  "tokio",
  "tower-http",
  "url",
+ "uuid 1.4.1",
 ]
 
 [[package]]

@@ -7,9 +7,12 @@ use axum::{
 };
 use clap::Parser;
 use std::{
+    fs::create_dir_all,
     net::{IpAddr, SocketAddr},
     sync::OnceLock,
 };
+
+use crate::matrix::room_init;
 
 static ARGS: OnceLock<Args> = OnceLock::new();
 #[derive(Parser, Debug)]
@@ -51,6 +54,11 @@ struct Args {
     /// 默认值: 127.0.0.1
     #[arg(long, default_value = "127.0.0.1", env = "LISTEN")]
     listen: String,
+
+    /// 服务存储文件的目录
+    /// 默认为data
+    #[arg(short, long, default_value = "data", env = "DATA_DIR")]
+    data_dir: String,
 }
 
 #[tokio::main]
@@ -61,6 +69,14 @@ async fn main() {
         .init();
     log::info!("args: {:?}", args);
     log::info!("start web server");
+
+    create_dir_all(&args.data_dir).unwrap();
+
+    log::info!("test login");
+    matrix::ROOM.get_or_init(room_init);
+    tokio::spawn(matrix::e2ee::sync(matrix::CLIENT.get().unwrap().clone()));
+    log::info!("login success");
+
     let mut app: Router = Router::new()
         .route("/ping", get(ping))
         .route("/send", post(send))

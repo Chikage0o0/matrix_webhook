@@ -12,6 +12,9 @@ POST http://{host}:{port}/send
 ```
 如果在环境变量中设置了`TOKEN`,则需要在请求头中添加`Authorization: Bearer {TOKEN}`
 
+## E2EE
+当申请验证后，会在终端输出相应引导，按照提示操作即可。
+
 ## 使用
 #### Docker
 ```shell
@@ -23,5 +26,6 @@ docker run -d --name matrix_webhook      \
     -e TOKEN="x"                         \
     -e LISTEN='0.0.0.0'                  \
     -p 8080:3000                         \
+    -v ./matrix_webhook:/matrix_webhook  \
     --restart unless-stopped chikage/matrix_webhook:latest
 ```
